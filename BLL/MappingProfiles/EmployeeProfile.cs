@@ -10,5 +10,6 @@ internal class EmployeeProfile : Profile
         CreateMap<Employee, EmployeeDetailedResponse>();
         CreateMap<Employee, EmployeeResponse>();
 
+        CreateMap<EmployeeUpdateRequest, EmployeeRequest>();
     }
 }

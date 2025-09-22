@@ -64,10 +64,10 @@ public class EmployeeController(IEmployeeService EmployeeService,
         //doesnt have a value
         if (!id.HasValue) return BadRequest();
 
-        var Employee = EmployeeService.GetById(id.Value);
+        var employee = EmployeeService.GetById(id.Value); // Changed variable name to lowercase
         //if null
-        if (Employee == null) return NotFound();
-        return View(Employee);
+        if (employee == null) return NotFound();
+        return View(employee); // Updated to use the correct variable name
     }
 
     #endregion
@@ -79,10 +79,10 @@ public class EmployeeController(IEmployeeService EmployeeService,
         //doesnt have a value
         if (!id.HasValue) return BadRequest();
 
-        var Employee = EmployeeService.GetById(id.Value);
+        var employee = EmployeeService.GetById(id.Value); // Changed variable name to lowercase
         //if null
-        if (Employee == null) return NotFound();
-        return View(Employee);
+        if (employee == null) return NotFound();
+        return View(employee); // Updated to use the correct variable name
     }
     [HttpPost]
     public IActionResult Edit([FromRoute] int? id, EmployeeUpdateRequest request)
@@ -132,10 +132,10 @@ public class EmployeeController(IEmployeeService EmployeeService,
         //doesnt have a value
         if (!id.HasValue) return BadRequest();
 
-        var Employee = EmployeeService.GetById(id.Value);
+        var employee = EmployeeService.GetById(id.Value); // Changed variable name to lowercase
         //if null
-        if (Employee == null) return NotFound();
-        return View(Employee);
+        if (employee == null) return NotFound();
+        return View(employee); // Updated to use the correct variable name
     }
 
     [HttpPost, ActionName("Delete")]
@@ -145,7 +145,7 @@ public class EmployeeController(IEmployeeService EmployeeService,
         if (!id.HasValue) { return BadRequest(); }
         try
         {
-            var Employee = EmployeeService.GetById(id.Value);
+            var employee = EmployeeService.GetById(id.Value); // Changed variable name to lowercase
             var IsDeleted = EmployeeService.Delete(id.Value);
             //throw new Exception();
 
@@ -168,6 +168,7 @@ public class EmployeeController(IEmployeeService EmployeeService,
         }
         return View(Employee);
     }
+
     #endregion : Controller
 
 }
