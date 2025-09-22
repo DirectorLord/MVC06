@@ -14,6 +14,15 @@ public class DepartmentRequest
     public string? Description { get; set; }
     [Required]
     public string Code { get; set; } = null!;
-    public DateTime CreatedOn {  get; set; }
-    public string? ToEntity { get; set; }
+    public DateTime CreatedOn { get; set; }
+    public DAL.Entities.Department ToEntity()
+    {
+        return new DAL.Entities.Department
+        {
+            Name = this.Name,
+            Code = this.Code,
+            Description = this.Description,
+            CreatedAt = this.CreatedOn
+        };
+    }
 }

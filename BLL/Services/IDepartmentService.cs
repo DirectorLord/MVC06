@@ -9,4 +9,5 @@ public interface IDepartmentService
     int Update(DepartmentUpdateRequest request);
     int Delete(int id);
     int Add(DepartmentRequest request);
+    int Create(DepartmentRequest request);
 }

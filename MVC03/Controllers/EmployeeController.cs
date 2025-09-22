@@ -1,20 +1,19 @@
-﻿global using Azure.Core;
-global using BLL.DataTransferObject.Department;
-global using BLL.Services;
-global using DAL.Entities;
-global using Microsoft.AspNetCore.Mvc;
+﻿using BLL.DataTransferObject.Employee;
+using DAL.Entities;
+using Microsoft.AspNetCore.Mvc;
+using MVC03.Controllers;
 
-namespace MVC03.Controllers;
+namespace MVC04.Controllers;
 
-public class DepartmentController(IDepartmentService departmentService,
-    ILogger<DepartmentController> logger, IWebHostEnvironment env ) : Controller
+public class EmployeeController(IEmployeeService EmployeeService,
+    ILogger<EmployeeController> logger, IWebHostEnvironment env) : Controller
 {
     [HttpGet]
     public IActionResult Index()
     {
-        var departments = departmentService.GetAll();
+        var Employees = EmployeeService.GetAll();
 
-        return View(departments);
+        return View(Employees);
     }
 
     #region Create
@@ -24,7 +23,7 @@ public class DepartmentController(IDepartmentService departmentService,
         return View();
     }
     [HttpPost]
-    public IActionResult Create(DepartmentRequest request)
+    public IActionResult Create(EmployeeRequest request)
     {
         //server side validation
         if (ModelState.IsValid)
@@ -33,17 +32,19 @@ public class DepartmentController(IDepartmentService departmentService,
         }
         try
         {
-            var result = departmentService.Add(request);
+            var result = EmployeeService.Add(request);
             //throw new Exception();
 
-            if(result > 0)
+            if (result > 0)
             {
                 return RedirectToAction(nameof(Index));
             }
-            ModelState.AddModelError(string.Empty, "Can't department now");
+            ModelState.AddModelError(string.Empty, "Can't Employee now");
         }
-        catch (Exception ex) {
-            if (env.IsDevelopment()) {
+        catch (Exception ex)
+        {
+            if (env.IsDevelopment())
+            {
                 ModelState.AddModelError(string.Empty, ex.Message);
             }
             else
@@ -51,7 +52,7 @@ public class DepartmentController(IDepartmentService departmentService,
                 logger.LogError(ex, ex.Message);
             }
         }
-            return View(request);
+        return View(request);
     }
     #endregion
 
@@ -61,12 +62,12 @@ public class DepartmentController(IDepartmentService departmentService,
     public IActionResult Details(int? id)
     {
         //doesnt have a value
-        if(!id.HasValue) return BadRequest();
+        if (!id.HasValue) return BadRequest();
 
-        var department = departmentService.GetById(id.Value);
+        var Employee = EmployeeService.GetById(id.Value);
         //if null
-        if(department ==null)  return NotFound();
-        return View(department);
+        if (Employee == null) return NotFound();
+        return View(Employee);
     }
 
     #endregion
@@ -78,13 +79,13 @@ public class DepartmentController(IDepartmentService departmentService,
         //doesnt have a value
         if (!id.HasValue) return BadRequest();
 
-        var department = departmentService.GetById(id.Value);
+        var Employee = EmployeeService.GetById(id.Value);
         //if null
-        if (department == null) return NotFound();
-        return View(department);
+        if (Employee == null) return NotFound();
+        return View(Employee);
     }
     [HttpPost]
-    public IActionResult Edit([FromRoute] int? id, DepartmentUpdateRequest request)
+    public IActionResult Edit([FromRoute] int? id, EmployeeUpdateRequest request)
     {
         //server side validation
         if (!id.HasValue)
@@ -101,13 +102,13 @@ public class DepartmentController(IDepartmentService departmentService,
         }
         try
         {
-            var result = departmentService.Update(request);
+            var result = EmployeeService.Update(request);
 
             if (result > 0)
             {
                 return RedirectToAction(nameof(Index));
             }
-            ModelState.AddModelError(string.Empty, "Can't department now");
+            ModelState.AddModelError(string.Empty, "Can't Employee now");
         }
         catch (Exception ex)
         {
@@ -131,10 +132,10 @@ public class DepartmentController(IDepartmentService departmentService,
         //doesnt have a value
         if (!id.HasValue) return BadRequest();
 
-        var department = departmentService.GetById(id.Value);
+        var Employee = EmployeeService.GetById(id.Value);
         //if null
-        if (department == null) return NotFound();
-        return View(department);
+        if (Employee == null) return NotFound();
+        return View(Employee);
     }
 
     [HttpPost, ActionName("Delete")]
@@ -144,14 +145,15 @@ public class DepartmentController(IDepartmentService departmentService,
         if (!id.HasValue) { return BadRequest(); }
         try
         {
-            var department = departmentService.GetById(id.Value);
-            var IsDeleted = departmentService.Delete(id.Value) > 0; 
+            var Employee = EmployeeService.GetById(id.Value);
+            var IsDeleted = EmployeeService.Delete(id.Value);
+            //throw new Exception();
 
             if (IsDeleted)
             {
                 return RedirectToAction(nameof(Index));
             }
-            ModelState.AddModelError(string.Empty, "Can't department now");
+            ModelState.AddModelError(string.Empty, "Can't Employee now");
         }
         catch (Exception ex)
         {
@@ -164,7 +166,8 @@ public class DepartmentController(IDepartmentService departmentService,
                 logger.LogError(ex, ex.Message);
             }
         }
-        return View();
+        return View(Employee);
     }
-    #endregion
+    #endregion : Controller
+
 }
