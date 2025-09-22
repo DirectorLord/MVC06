@@ -21,8 +21,16 @@ public class EmployeeService(IEmployeeRepository repository, IMapper mapper) : I
         return result > 0;
     }
     public IEnumerable<EmployeeResponse> GetAll() {
-        var employee = repository.GetAll();
-        return mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeResponse>>(employee);
+        var employee = repository.GetAllQuery().Select(
+                e => new EmployeeResponse
+                {
+                    Age = e.Age,
+                    Email = e.Email,
+                    Name = e.Name,
+                }
+            ).ToList();
+        return employee;
+        //return mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeResponse>>(employee);
     }
 
     public EmployeeDetailedResponse? GetById(int id)

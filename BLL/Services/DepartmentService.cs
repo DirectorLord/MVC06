@@ -28,7 +28,7 @@ public class DepartmentService(IDepartmentRepository repository) : IDepartmentSe
 
     public IEnumerable<DepartmentDetailResponse> GetAll()
     {
-        var departments = repository.GetAll();
+        var departments = repository.GetAllQuery();
         return departments.Select(department => new DepartmentDetailResponse
         {
             Id = department.Id,

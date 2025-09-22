@@ -23,9 +23,10 @@ public class BaseRepository<TEntity>(CompanyDBContext dbContext) : IRepository<T
         _dbSet.Remove(TEntity);
         return dbContext.SaveChanges();
     }
-    public IEnumerable<TEntity> GetAll(bool trackChanges = false)
+    public IEnumerable<TEntity> GetAllQuery(bool trackChanges = false)
     {
-        return trackChanges ? _dbSet.ToList() : _dbSet.AsNoTracking().ToList();
+       return trackChanges ? _dbSet
+            .Where(x => !x.isDeleted).ToList(): _dbSet.AsNoTracking().Where(x => !x.isDeleted).ToList();
     }
     public TEntity GetById(int id)
     {
