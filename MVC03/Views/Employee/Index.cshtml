@@ -1,8 +1,9 @@
 ﻿@model IEnumerable<EmployeeResponse>
 @{
     ViewData["Title"] = "Index";
+    ViewData["hello"] = "hello from the index view";
 }
-
+<h1>@ViewData["hello" ]</h1>
 <h1>All Employees</h1>
 <br />
 <br />

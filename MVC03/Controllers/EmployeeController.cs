@@ -1,7 +1,5 @@
 ﻿using BLL.DataTransferObject.Employee;
-using DAL.Entities;
-using Microsoft.AspNetCore.Mvc;
-using MVC03.Controllers;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace MVC04.Controllers;
 
@@ -12,7 +10,6 @@ public class EmployeeController(IEmployeeService EmployeeService,
     public IActionResult Index()
     {
         var Employees = EmployeeService.GetAll();
-
         return View(Employees);
     }
 
