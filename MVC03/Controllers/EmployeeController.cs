@@ -23,7 +23,7 @@ public class EmployeeController(IEmployeeService EmployeeService,
     public IActionResult Create(EmployeeRequest request)
     {
         //server side validation
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
             return View(request);
         }
@@ -34,9 +34,14 @@ public class EmployeeController(IEmployeeService EmployeeService,
 
             if (result > 0)
             {
+                TempData["Message"] = $"Employee with Name {request.Name} has created";
                 return RedirectToAction(nameof(Index));
             }
-            ModelState.AddModelError(string.Empty, "Can't Employee now");
+            else
+            {
+                TempData["Message"] = $"Can not create Employee with name {request.Name}";
+                return RedirectToAction(nameof(Index));
+            }
         }
         catch (Exception ex)
         {
